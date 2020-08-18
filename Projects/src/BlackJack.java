@@ -44,7 +44,7 @@ public class BlackJack {
         for (int i = 0; i < table.length; i++) {
             for (int j = 0; j < table[i].length; j++) {
                 System.out.format("%-15s\t\t\t", table[i][j]);
-                if (i > 1) { Thread.sleep(1000); }
+                //if (i > 1) { Thread.sleep(1000); }
             }
             System.out.println();
         }

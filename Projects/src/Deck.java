@@ -14,7 +14,6 @@ public class Deck {
                 num++;
             }
         }
-
     }
 
     public void shuffle() {

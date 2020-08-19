@@ -7,10 +7,17 @@ public class BlackJack {
 
     private static Scanner keybd;
 
+    private static Player player;
+
+    private static int bet;
+
     public static void play() throws InterruptedException {
 
         // initialize the Scanner
         keybd = new Scanner(System.in);
+
+        //Run intro
+        intro(keybd);
 
         // create a shuffled deck
         Deck baseDeck = new Deck();
@@ -44,9 +51,53 @@ public class BlackJack {
         for (int i = 0; i < table.length; i++) {
             for (int j = 0; j < table[i].length; j++) {
                 System.out.format("%-15s\t\t\t", table[i][j]);
-                //if (i > 1) { Thread.sleep(1000); }
+                // if (i > 1) { Thread.sleep(1000); }
             }
             System.out.println();
         }
+
+
+    }
+
+    public static void intro(Scanner scan) {
+
+        // Player parameters
+        System.out.print("Name:         ");
+        String firstName = scan.nextLine();
+
+        System.out.print("Last name:    ");
+        String lastName = scan.nextLine();
+
+        System.out.print("Budget:       ");
+        int budget = scan.nextInt();
+
+        // Initialize Player
+        player = new Player(firstName, lastName, budget);
+
+        // INTRO
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("*********************************************");
+        System.out.println("*************   BlackJackasso   *************");
+        System.out.println("*********************************************");
+        System.out.println();
+
+        System.out.println("Welcome Mr. " + player.getLastName() + " to BlackJackasso!");
+
+        boolean flag = true;
+        while (flag) {
+            System.out.println("How much would you like to bet?");
+            bet = scan.nextInt();
+            if (bet > player.getBudget()) {
+                System.out.println("ERROR. Not enough budget, try again.");
+                System.out.println();
+            }
+            else { flag = false; }
+        }
+        System.out.println();
+        System.out.println("Currently betting: " + bet + "\nPossible Win: " + bet*2 );
+        System.out.println();
     }
 }

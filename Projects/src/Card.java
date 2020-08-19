@@ -1,10 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Class that will take care of creating each card
+ */
+
 public class Card {
 
     private String suit;
     private String value;
+    private int valueNum;
 
     public Card(int suit, int value) {
 
@@ -23,6 +28,9 @@ public class Card {
             else { this.value = "Ace"; }
         }
 
+        // Numeric value assigner
+        if (value > 10) { this.valueNum = 10; }
+        else { this.valueNum = value; }
     }
 
     public String getSuit() {
@@ -31,6 +39,14 @@ public class Card {
 
     public String getValue() {
         return this.value;
+    }
+
+    public int getValueNum() {
+        return this.valueNum;
+    }
+
+    public void setValueNum(int num) {
+        this.valueNum = num;
     }
 
 }

@@ -91,14 +91,16 @@ public class BlackJack {
             if (bet > player.getBudget()) {
                 System.out.println("ERROR. Not enough budget, try again.");
                 System.out.println();
+            } else {
+                flag = false;
             }
-            else { flag = false; }
         }
 
         System.out.println();
-        System.out.println("Currently betting: " + bet + "\nPossible Win: " + bet*2 );
+        System.out.println("Currently betting: " + bet + "\nPossible Win: " + bet * 2);
         System.out.println();
 
+        // DEALING
         // deals 4 cards, 1 for the player, another one for himself, and so on
         Card p1 = deck.get(0);
         deck.remove(0);
@@ -114,20 +116,19 @@ public class BlackJack {
 
         // Display the cards dealt
         String[][] table = new String[4][2];
-        table[0] = new String[] {"Your cards:", "Dealer's cards:"};
-        table[1] = new String[] {"-----------", "---------------"};
-        table[2] = new String[] {p1.getValue() + " of " + p1.getSuit(), d1.getValue() + " of " + d1.getSuit()};
-        table[3] = new String[] {p2.getValue() + " of " + p2.getSuit(), "Unknown"};
+        table[0] = new String[]{"Your cards:", "Dealer's cards:"};
+        table[1] = new String[]{"-----------", "---------------"};
+        table[2] = new String[]{p1.getValue() + " of " + p1.getSuit(), d1.getValue() + " of " + d1.getSuit()};
+        table[3] = new String[]{p2.getValue() + " of " + p2.getSuit(), "Unknown"};
 
         for (int i = 0; i < table.length; i++) {
             for (int j = 0; j < table[i].length; j++) {
-                if ( !(i == 3 && j == 2) ) {
+                if (!(i == 3 && j == 2)) {
                     System.out.format("%-15s\t\t\t", table[i][j]);
-                }
-                else {
+                } else {
                     System.out.print("\t\t\t" + table[i][j]);
-                    if ( (d1.getValueNum() == 10 && d2.getValue().equals("Ace")) ||
-                         (d1.getValue().equals("Ace") && d2.getValueNum() == 10) ) {
+                    if ((d1.getValueNum() == 10 && d2.getValue().equals("Ace")) ||
+                            (d1.getValue().equals("Ace") && d2.getValueNum() == 10)) {
 
                         System.out.print("   =   " + d2.getValue() + " of " + d2.getSuit());
                     }
@@ -136,5 +137,22 @@ public class BlackJack {
             }
             System.out.println();
         }
+
+        if ( (p1.getValue().equals("Ace") && p1.getValueNum2() + p2.getValueNum() == 21) ||
+             (p2.getValue().equals("Ace") && p1.getValueNum() + p2.getValueNum2() == 21) ) {
+            System.out.print("BLACKJACKASSO");
+        }
+        else {
+            if ( p1.getValue().equals("Ace") ) {
+                System.out.print("Sum: " + (p1.getValueNum() + p2.getValueNum()) + "/" + (p1.getValueNum2() + p2.getValueNum()));
+            }
+            else if ( p2.getValue().equals("Ace") ) {
+                System.out.print("Sum: " + (p1.getValueNum() + p2.getValueNum()) + "/" + (p1.getValueNum() + p2.getValueNum2()));
+            }
+            else {
+                System.out.print("Sum: " + ( p1.getValueNum() + p2.getValueNum() ));
+            }
+        }
     }
 }
+

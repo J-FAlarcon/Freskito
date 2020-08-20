@@ -10,6 +10,7 @@ public class Card {
     private String suit;
     private String value;
     private int valueNum;
+    private int valueNum2;
 
     public Card(int suit, int value) {
 
@@ -30,6 +31,8 @@ public class Card {
 
         // Numeric value assigner
         if (value > 10) { this.valueNum = 10; }
+        else if (value == 1) { this.valueNum = 1;
+                               this.valueNum2 = 11; }
         else { this.valueNum = value; }
     }
 
@@ -43,6 +46,10 @@ public class Card {
 
     public int getValueNum() {
         return this.valueNum;
+    }
+
+    public int getValueNum2() {
+        return this.valueNum2;
     }
 
     public void setValueNum(int num) {

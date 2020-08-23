@@ -31,22 +31,24 @@ public class BlackJack {
 
         // Start the game
         play();
+
+        keybd.close();
     }
 
     public static void intro() {
 
         // Player parameters
-        System.out.print("Name:         ");
-        String firstName = keybd.nextLine();
+        //System.out.print("Name:         ");
+        //String firstName = keybd.nextLine();
 
-        System.out.print("Last name:    ");
-        String lastName = keybd.nextLine();
+        //System.out.print("Last name:    ");
+        //String lastName = keybd.nextLine();
 
-        System.out.print("Budget:       ");
-        int budget = keybd.nextInt();
+        //System.out.print("Budget:       ");
+        //int budget = keybd.nextInt();
 
         // Initialize Player
-        player = new Player(firstName, lastName, budget);
+        player = new Player("", "", 100);
 
         // INTRO
         System.out.println();
@@ -79,20 +81,19 @@ public class BlackJack {
 
         // Check there are enough cards in the deck
         if (deck.size() < 20) {
-            // If there aren't get a new deck
+            // If there aren't then get a new deck
             deckPrep();
         }
 
         // Ask for the betting
-        boolean flag = true;
-        while (flag) {
+        while (true) {
             System.out.println("How much would you like to bet?");
             bet = keybd.nextInt();
             if (bet > player.getBudget()) {
                 System.out.println("ERROR. Not enough budget, try again.");
                 System.out.println();
             } else {
-                flag = false;
+                break;
             }
         }
 
@@ -114,12 +115,22 @@ public class BlackJack {
         Card d2 = deck.get(0);
         deck.remove(0);
 
+        ArrayList<Card> playerCards = new ArrayList<Card>();
+        playerCards.add(p1);
+        playerCards.add(p2);
+
+        ArrayList<Card> dealerCards = new ArrayList<Card>();
+        dealerCards.add(d1);
+        dealerCards.add(d2);
+
+
+
         // Display the cards dealt
         String[][] table = new String[4][2];
         table[0] = new String[]{"Your cards:", "Dealer's cards:"};
         table[1] = new String[]{"-----------", "---------------"};
-        table[2] = new String[]{p1.getValue() + " of " + p1.getSuit(), d1.getValue() + " of " + d1.getSuit()};
-        table[3] = new String[]{p2.getValue() + " of " + p2.getSuit(), "Unknown"};
+        table[2] = new String[]{ p1.toString(), d1.toString() };
+        table[3] = new String[]{ p2.toString(), "[Unknown]" };
 
         for (int i = 0; i < table.length; i++) {
             for (int j = 0; j < table[i].length; j++) {
@@ -138,19 +149,21 @@ public class BlackJack {
             System.out.println();
         }
 
-        if ( (p1.getValue().equals("Ace") && p1.getValueNum2() + p2.getValueNum() == 21) ||
-             (p2.getValue().equals("Ace") && p1.getValueNum() + p2.getValueNum2() == 21) ) {
-            System.out.print("BLACKJACKASSO");
-        }
-        else {
-            if ( p1.getValue().equals("Ace") ) {
-                System.out.print("Sum: " + (p1.getValueNum() + p2.getValueNum()) + "/" + (p1.getValueNum2() + p2.getValueNum()));
-            }
-            else if ( p2.getValue().equals("Ace") ) {
-                System.out.print("Sum: " + (p1.getValueNum() + p2.getValueNum()) + "/" + (p1.getValueNum() + p2.getValueNum2()));
-            }
-            else {
-                System.out.print("Sum: " + ( p1.getValueNum() + p2.getValueNum() ));
+        // Insurance check
+        if (d1.getValueNum() == 1) {
+            System.out.println("Would you like an insurance? (y/n)");
+            String ins = keybd.nextLine();
+
+            int insurance = 0;
+            if (ins.equals("y")) {
+                insurance = bet/2;
+                if (d2.getValueNum() == 10) {
+                    System.out.println(d1.toString() + " + " + d2.toString() + " = 21");
+                    System.out.println("BLACKJACKASSO. The dealer wins.");
+                    System.out.println("You win " + insurance * 2);
+                    bet = 0;
+                }
+                player.setBudget(player.getBudget()-insurance);
             }
         }
     }

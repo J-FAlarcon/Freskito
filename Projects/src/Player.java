@@ -28,4 +28,8 @@ public class Player {
     public int getBudget() {
         return this.budget;
     }
+
+    public void setBudget(int newBudget) {
+        this.budget = newBudget;
+    }
 }

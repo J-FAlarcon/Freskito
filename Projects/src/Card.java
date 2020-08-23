@@ -36,6 +36,10 @@ public class Card {
         else { this.valueNum = value; }
     }
 
+    public String toString() {
+        return this.getValue() + " of " + this.getSuit();
+    }
+
     public String getSuit() {
         return this.suit;
     }
@@ -52,8 +56,6 @@ public class Card {
         return this.valueNum2;
     }
 
-    public void setValueNum(int num) {
-        this.valueNum = num;
-    }
+
 
 }
